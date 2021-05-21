@@ -4,7 +4,7 @@ import getters from './getters.js'
 
 
 export default {
-    namespace: true,
+    namespaced: true,
     state(){
         return {
             coaches: [
