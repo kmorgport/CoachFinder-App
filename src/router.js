@@ -18,7 +18,13 @@ const router = createRouter({
             //remember to set props to true so components can read router paths as props
             props: true,
             children:[
-            {path: '/contact', component: ContactCoach}
+            {
+                //for children paths, DO NOT INCLUDE / BEFORE PATH 
+                //they are automatically added when rendered
+                path: 'contact', 
+                component: ContactCoach,
+                props: true,
+            }
         ]
         },
         { path: '/register', component: CoachRegistration},
