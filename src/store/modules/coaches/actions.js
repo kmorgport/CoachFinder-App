@@ -16,7 +16,7 @@ export default {
         // const responseData = await response.json();
 
         if(!response.ok){
-            //errror message
+            //errror messag
         }
 
         context.commit('registerCoach', {
@@ -31,7 +31,8 @@ export default {
         const responseData = await response.json();
 
         if(!response.ok){
-            //error handling
+            const error = new Error(responseData.message || 'Failed to fetch!');
+            throw error;
         }
 
         const coaches = [];
