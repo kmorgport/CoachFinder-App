@@ -8,7 +8,7 @@ export default {
             hourlyRate: payload.rate,
             areas: payload.areas
         };
-        const response = await fetch(`https://coachfinder-77b3c-default-rtdb.firebaseio.com/${userId}.json`,{
+        const response = await fetch(`https://coachfinder-77b3c-default-rtdb.firebaseio.com/coaches/${userId}.json`,{
             method: 'PUT',
             body: JSON.stringify(coachData)
         });
@@ -18,8 +18,6 @@ export default {
         if(!response.ok){
             //errror message
         }
-
-
 
         context.commit('registerCoach', {
             ...coachData,
