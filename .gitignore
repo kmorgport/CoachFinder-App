@@ -3,7 +3,7 @@ node_modules
 /dist
 
 ./src/store/modules/keys/index.js
-./src/store/modules/keys/index.js
+./src/store/modules/keys/getters.js
 
 # local env files
 .env.local
