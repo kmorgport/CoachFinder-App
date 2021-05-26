@@ -52,6 +52,6 @@ export default {
             coaches.push(coach);
         }
         context.commit('setCoaches', coaches)
-        context.commit('setFetchTimestamp')
+        context.commit('setFetchTimeStamp')
     }
 };
