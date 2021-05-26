@@ -2,7 +2,8 @@
 node_modules
 /dist
 
-store/modules/keys/*
+./src/store/modules/keys/index.js
+./src/store/modules/keys/index.js
 
 # local env files
 .env.local
