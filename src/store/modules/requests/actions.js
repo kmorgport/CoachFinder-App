@@ -21,5 +21,10 @@ export default {
 
         newRequest.id = responseData.name
         context.commit('addRequest', newRequest)
+    },
+    async fetchRequests(context){
+        const coachId = context.rootGetters.userId;
+        const token = context.rootGetters.token;
+        await fetch(`https://coachfinder-77b3c-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`)
     }
 }
