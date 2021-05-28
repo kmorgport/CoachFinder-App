@@ -1,4 +1,11 @@
 <template>
+<div>
+    <base-dialog :show="!!error" title="an error occurred" @close="handleError">
+    <p>{{ error }}</p>
+    </base-dialog>
+<base-dialog :show="isLoading" title="Authenticating" fixed>
+    <base-spinner></base-spinner>
+</base-dialog>
 <base-card>
     <form @submit.prevent="submitForm">
         <div class="form-control">
@@ -14,16 +21,21 @@
         <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption}}</base-button>
     </form>
     </base-card>
+</div>
 </template>
 
 <script>
+import BaseDialog from '../../components/ui/BaseDialog.vue';
 export default {
+  components: { BaseDialog },
     data(){
         return {
             email: '',
             password: '',
             formIsValid: true,
-            mode: 'login'
+            mode: 'login',
+            isLoading: false,
+            error: false
         }
     },
     computed: {
@@ -43,7 +55,7 @@ export default {
         }
     },
     methods: {
-        submitForm(){
+        async submitForm(){
             if(
                 this.email === ''|| 
                 !this.email.includes('@')|| 
@@ -52,14 +64,21 @@ export default {
                 this.formIsValid = false
                 return
             }
+
+            this.isLoading = true;
+            try{
             if(this.mode === 'login'){
                 //
             } else{
-                this.$store.dispatch('signup', {
+                await  this.$store.dispatch('signup', {
                     email: this.email,
                     password: this.password
                 })
             }
+            }catch(err){
+                this.error = err.message || 'Failed to authenticate, try later';
+            }
+            this.isLoading = false;
         },
         switchAuthMode(){
             if(this.mode === 'login'){
@@ -67,6 +86,9 @@ export default {
             }else{
                 this.mode = 'login'
             }
+        },
+        handleError(){
+            this.error = null;
         }
     }
 }
