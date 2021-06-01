@@ -46,7 +46,7 @@ export default {
         localStorage.setItem('tokenExpiration', expirationDate);
 
         timer = setTimeout(()=>{
-            context.dispatch('logout')
+            context.dispatch('autoLogout')
         },expiresIn)
 
         context.commit('setUser', {
@@ -65,7 +65,7 @@ export default {
             return;
         }
         timer = setTimeout(()=>{
-            context.dispatch('logout')
+            context.dispatch('autoLogout')
         },expiresIn);
 
         if(token && userId){
@@ -87,36 +87,8 @@ export default {
            userId: null,
        })
     },
-    async fetchRequests(context) {
-        const coachId = context.rootGetters.userId;
-        const token = context.rootGetters.token;
-        const response = await fetch(
-          `https://vue-http-demo-85e9e.firebaseio.com/requests/${coachId}.json?auth=` +
-            token
-        );
-        const responseData = await response.json();
-    
-        if (!response.ok) {
-          const error = new Error(
-            responseData.message || 'Failed to fetch requests.'
-          );
-          throw error;
-        }
-    
-        const requests = [];
-    
-        for (const key in responseData) {
-          const request = {
-            id: key,
-            coachId: coachId,
-            userEmail: responseData[key].userEmail,
-            message: responseData[key].message
-          };
-          requests.push(request);
-        }
-    
-        context.commit('setRequests', requests);
-      }
-    };
-    
+    autoLogout(context){
+        context.dispatch('logout');
+        context.commit('setAutoLogout');
+    },
 }
